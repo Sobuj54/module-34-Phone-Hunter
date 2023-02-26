@@ -7,14 +7,28 @@ const loadPhones = async (searchText) => {
 
 const displayPhones = (phones) => {
   //console.log(phones);
+  //   show 10 phones only
+  phones = phones.slice(0, 10);
   const phonesContainer = document.getElementById("phones-container");
   phonesContainer.innerHTML = "";
+
+  //   no phone found warning
+  const noPhoneFound = document.getElementById("no-phone-found");
+  if (phones.length === 0) {
+    // removing display none
+    noPhoneFound.classList.remove("d-none");
+  } else {
+    noPhoneFound.classList.add("d-none");
+  }
+
   phones.forEach((phone) => {
     console.log(phone);
+
     // creating div element
     const div = document.createElement("div");
     // adding a class to the created element
     div.classList.add("col");
+
     // setting innerHtml with the help of backtick
     div.innerHTML = `
     <div class="card">
@@ -40,4 +54,4 @@ document.getElementById("btn-search").addEventListener("click", function () {
   loadPhones(searchText);
 });
 
-loadPhones();
+//loadPhones();

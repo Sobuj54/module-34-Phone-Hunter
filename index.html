@@ -13,11 +13,11 @@
   </head>
   <body>
     <header>
-      <h1>Welcome to my Phone Hunter!</h1>
+      <h1 class="text-center">Welcome to my Phone Hunter!</h1>
     </header>
     <main class="container">
-      <section class="d-flex gap-2">
-        <div class="mb-3 w-50">
+      <section class="d-flex gap-2 mt-4 mb-4">
+        <div class="w-50">
           <input
             id="search-field"
             type="text"
@@ -33,6 +33,9 @@
           id="phones-container"
           class="row row-cols-1 row-cols-md-3 g-4"
         ></div>
+        <div id="no-phone-found" class="mt-4 d-none">
+          <h3 class="text-warning">No phone found, try a new search!!</h3>
+        </div>
       </section>
     </main>
     <script
