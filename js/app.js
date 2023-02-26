@@ -29,7 +29,7 @@ const displayPhones = (phones, dataLimit) => {
   }
 
   phones.forEach((phone) => {
-    console.log(phone);
+    //console.log(phone);
 
     // creating div element
     const div = document.createElement("div");
@@ -46,6 +46,7 @@ const displayPhones = (phones, dataLimit) => {
       brand: ${phone.brand}
       slug: ${phone.slug}
       </p>
+      <button onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-primary">Show Details</button>
     </div>
   </div>
     `;
@@ -67,6 +68,16 @@ document.getElementById("btn-search").addEventListener("click", function () {
   // start spinner
   processSearch(10);
 });
+// ------------------------>
+// enter key event handler
+// enter key event handler is used on input field not in button
+document
+  .getElementById("search-field")
+  .addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      processSearch(10);
+    }
+  });
 // --------------------------------------------->
 // spinner function
 const toggleSpinner = (isTrue) => {
@@ -82,5 +93,12 @@ const toggleSpinner = (isTrue) => {
 document.getElementById("btn-showAll").addEventListener("click", function () {
   processSearch();
 });
+// ------------------------>
+const loadPhoneDetails = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  console.log(data.data);
+};
 
 //loadPhones();
