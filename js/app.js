@@ -1,16 +1,23 @@
-const loadPhones = async (searchText) => {
+const loadPhones = async (searchText, dataLimit) => {
   const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   const res = await fetch(url);
   const data = await res.json();
-  displayPhones(data.data);
+  displayPhones(data.data, dataLimit);
 };
-
-const displayPhones = (phones) => {
+// -------------------->
+const displayPhones = (phones, dataLimit) => {
   //console.log(phones);
-  //   show 10 phones only
-  phones = phones.slice(0, 10);
   const phonesContainer = document.getElementById("phones-container");
   phonesContainer.innerHTML = "";
+
+  //   show 10 phones only
+  const showAll = document.getElementById("show-all");
+  if (dataLimit && phones.length > 10) {
+    phones = phones.slice(0, 10);
+    showAll.classList.remove("d-none");
+  } else {
+    showAll.classList.add("d-none");
+  }
 
   //   no phone found warning
   const noPhoneFound = document.getElementById("no-phone-found");
@@ -48,15 +55,19 @@ const displayPhones = (phones) => {
   //   stop spinner
   toggleSpinner(false);
 };
-
-document.getElementById("btn-search").addEventListener("click", function () {
-  // start spinner
+// ------------------------------------>
+const processSearch = (dataLimit) => {
   toggleSpinner(true);
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
-  searchField.value = "";
-  loadPhones(searchText);
+  loadPhones(searchText, dataLimit);
+};
+//------------------------------------------>
+document.getElementById("btn-search").addEventListener("click", function () {
+  // start spinner
+  processSearch(10);
 });
+// --------------------------------------------->
 // spinner function
 const toggleSpinner = (isTrue) => {
   const spinner = document.getElementById("spinner");
@@ -66,5 +77,10 @@ const toggleSpinner = (isTrue) => {
     spinner.classList.add("d-none");
   }
 };
+// -------------------------------------------->
+// show all
+document.getElementById("btn-showAll").addEventListener("click", function () {
+  processSearch();
+});
 
 //loadPhones();
